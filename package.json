@@ -1,0 +1,25 @@
+{
+  "name": "sooch",
+  "version": "0.0.1",
+  "description": "A surreal themed clicker/idle game inspired by Plaaosert's Sooch discord bot",
+  "main": "index.js",
+  "repository": "git@github.com:surrealegg/sooch.git",
+  "author": "surrealegg <surrealegg@pm.me>",
+  "license": "MIT",
+  "scripts": {
+    "serve": "snowpack dev",
+    "build": "snowpack build"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.29.2",
+    "@typescript-eslint/parser": "^4.29.2",
+    "eslint": ">=5.16.0",
+    "eslint-config-google": "^0.14.0",
+    "snowpack": "^3.8.6",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@types/pixi.js": "^5.0.0",
+    "pixi.js": "^6.1.2"
+  }
+}
