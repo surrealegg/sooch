@@ -7,8 +7,8 @@
   "author": "surrealegg <surrealegg@pm.me>",
   "license": "MIT",
   "scripts": {
-    "serve": "snowpack dev",
-    "build": "snowpack build"
+    "serve": "snowpack dev --polyfill-node",
+    "build": "snowpack build --polyfill-node"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.29.2",
