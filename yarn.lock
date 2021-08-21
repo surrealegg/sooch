@@ -260,6 +260,11 @@
   resolved "https://registry.yarnpkg.com/@pixi/filter-fxaa/-/filter-fxaa-6.1.2.tgz#ec077b632967bbc00ee1dc481eeba6640b55294b"
   integrity sha512-Gx2i8DCSKXhnUz0/rFsTmSaGVXl+kyZnD7/e1WojZD4M/2DPzQXqfbmi2OxsR1dyFBH6utNjmYP8xIvQ4JmSMw==
 
+"@pixi/filter-glitch@^4.1.3":
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-glitch/-/filter-glitch-4.1.3.tgz#efb370f174d2fb839e5e3e86357432604773f238"
+  integrity sha512-lPxpQOE5EY/06lTdy1xAGvLcjK07zB41NuendVXXOzvezvecI+CwqRAG8LKF1s+o0Cwf/p6XHV3WOvC+tM1CSw==
+
 "@pixi/filter-noise@6.1.2":
   version "6.1.2"
   resolved "https://registry.yarnpkg.com/@pixi/filter-noise/-/filter-noise-6.1.2.tgz#fc4a409ffd153929540767c4676c169f07d7f7b7"

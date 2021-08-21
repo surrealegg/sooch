@@ -1,17 +1,12 @@
-import * as PIXI from 'pixi.js';
+import {Application} from 'pixi.js';
+import Sooch from './Sooch';
 
 const canvas = document.getElementById('game');
-const game = new PIXI.Application({
+const game = new Application({
   view: canvas as HTMLCanvasElement,
-  width: 256,
-  height: 256,
+  width: 1400,
+  height: 750,
   backgroundColor: 0x212121,
 });
 
-const text = new PIXI.Text('Sooch time!', {
-  fill: ['#fff'],
-});
-text.x = 20;
-text.y = 20;
-
-game.stage.addChild(text);
+new Sooch(game);
