@@ -19,7 +19,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@pixi/filter-glitch": "^4.1.3",
+    "@tweenjs/tween.js": "^18",
     "@types/pixi.js": "^5.0.0",
     "pixi.js": "^6.1.2"
   }
