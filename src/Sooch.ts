@@ -28,6 +28,7 @@ export default class Sooch {
     private container!: Container;
     private state!: SoochState;
     private scale!: Vector2;
+    private position!: Vector2;
     private squashAnimation!: Tween<Vector2>;
     private returnAnimation!: Tween<Vector2>;
 
@@ -46,10 +47,12 @@ export default class Sooch {
       this.state = SoochState.ENTER;
 
       this.scale = {x: 1, y: 1};
+      this.position = {x: -500, y: game.screen.height / 1.4};
 
       this.returnAnimation = new Tween(this.scale)
-          .to({x: 1, y: 1}, 30)
-          .easing(Easing.Quintic.In)
+          .to({x: 1, y: 1}, 150)
+          .delay(500)
+          .easing(Easing.Back.InOut)
           .onUpdate(() => {
             this.sprite.scale.x = this.scale.x;
             this.sprite.scale.y = this.scale.y;
@@ -88,6 +91,16 @@ export default class Sooch {
 
       // Set references to parent classes
       this.container = container;
+
+      // Temporary animation, will change later.
+      new Tween(this.position)
+          .delay(100)
+          .to({x: game.screen.width / 2, y: game.screen.height / 1.4})
+          .easing(Easing.Quartic.Out)
+          .onUpdate(() => {
+            this.sprite.position.x = this.position.x;
+            this.sprite.position.y = this.position.y;
+          }).start();
     }
 
     /**

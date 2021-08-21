@@ -1,6 +1,7 @@
 import {Sprite} from '@pixi/sprite';
 import {Application, Container} from 'pixi.js';
 import {Easing, Tween} from '@tweenjs/tween.js';
+import {Sound} from '@pixi/sound';
 
 type YPosition = {
     y: number
@@ -19,6 +20,7 @@ export default class Miner {
     private smashEnter!: Tween<YPosition>;
     private smashLeave!: Tween<YPosition>;
     private shakeTimeout!: number;
+    private sounds!: Sound[];
 
     /**
      * Miner constructor
@@ -36,6 +38,13 @@ export default class Miner {
       this.sprite.interactive = true;
       this.position = {y: this.MINER_INITAL_Y_POSITION};
 
+      this.sounds = [
+        Sound.from('/assets/audio/smash_1.wav'),
+        Sound.from('/assets/audio/smash_2.wav'),
+        Sound.from('/assets/audio/smash_3.wav'),
+        Sound.from('/assets/audio/smash_4.wav'),
+      ];
+
       // Set Animations
       this.smashEnter = new Tween(this.position)
           .to({y: -30}, 50)
@@ -46,7 +55,7 @@ export default class Miner {
             this.shakeTimeout = 10;
           });
       this.smashLeave = new Tween(this.position)
-          .to({y: this.MINER_INITAL_Y_POSITION}, 50)
+          .to({y: this.MINER_INITAL_Y_POSITION}, 150)
           .easing(Easing.Quintic.Out)
           .onUpdate(() => {
             this.sprite.y = this.position.y;
@@ -83,6 +92,7 @@ export default class Miner {
     public down(): void {
       this.smashLeave.stop();
       this.smashEnter.start();
+      this.sounds[Math.floor(Math.random() * this.sounds.length)].play();
     }
 
     /**
