@@ -6,10 +6,13 @@ module.exports = {
   optimize: {
     bundle: true,
     minify: true,
+    treeshake: true,
+    splitting: true,
+    sourcemap: false,
     target: 'es2018',
   },
   mount: {
     public: {url: '/', static: true},
-    src: '/dist',
+    src: '/',
   },
 };

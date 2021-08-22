@@ -35,14 +35,14 @@ export default class Miner {
       this.sprite.anchor.y = 0;
       this.sprite.x = game.screen.width / 2;
       this.sprite.y = this.MINER_INITAL_Y_POSITION;
-      this.sprite.interactive = true;
+      this.sprite.zIndex = 1;
       this.position = {y: this.MINER_INITAL_Y_POSITION};
 
       this.sounds = [
-        Sound.from('/assets/audio/smash_1.wav'),
-        Sound.from('/assets/audio/smash_2.wav'),
-        Sound.from('/assets/audio/smash_3.wav'),
-        Sound.from('/assets/audio/smash_4.wav'),
+        Sound.from({url: '/assets/audio/smash_1.wav', preload: true}),
+        Sound.from({url: '/assets/audio/smash_2.wav', preload: true}),
+        Sound.from({url: '/assets/audio/smash_3.wav', preload: true}),
+        Sound.from({url: '/assets/audio/smash_4.wav', preload: true}),
       ];
 
       // Set Animations
@@ -82,7 +82,7 @@ export default class Miner {
     /**
      * Adds the sprite to the container
      */
-    public addChild() {
+    public addChild(): void {
       this.container.addChild(this.sprite);
     }
 

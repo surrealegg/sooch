@@ -1,7 +1,7 @@
 import {update} from '@tweenjs/tween.js';
 import {Application, Container} from 'pixi.js';
-import Sooch from './Sooch';
 import Miner from './Miner';
+import SoochList from './Soochlist';
 
 const canvas = document.getElementById('game');
 const game = new Application({
@@ -12,9 +12,11 @@ const game = new Application({
 });
 
 const container = new Container;
+container.sortableChildren = true;
+
 const miner = new Miner(container, game);
-const sooch = new Sooch(container, game, miner);
-sooch.addChild();
+const soochList = new SoochList(container, game, miner);
+soochList.add();
 miner.addChild();
 game.stage.addChild(container);
 
