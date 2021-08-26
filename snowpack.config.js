@@ -2,6 +2,7 @@
 // See all supported options: https://www.snowpack.dev/reference/configuration
 
 /** @type {import("snowpack").SnowpackUserConfig } */
+// eslint-disable-next-line no-undef
 module.exports = {
   optimize: {
     bundle: true,
@@ -9,10 +10,10 @@ module.exports = {
     treeshake: true,
     splitting: true,
     sourcemap: false,
-    target: 'es2018',
+    target: "es2018",
   },
   mount: {
-    public: {url: '/', static: true},
-    src: '/',
+    public: { url: "/", static: true },
+    src: "/",
   },
 };

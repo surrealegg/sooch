@@ -1,43 +1,38 @@
-import Sooch from './Sooch';
-import {Application, Container} from 'pixi.js';
-import Miner from './Miner';
+import Sooch from "./Sooch";
+import { SoochOptions } from "../types";
 
 /**
  * A class that stores list of Sooch
  */
 export default class SoochList {
-    readonly MAX_SOOCH_AMOUNT = 5;
+  readonly MAX_SOOCH_AMOUNT = 6;
 
-    private list: Sooch[] = [];
-    private container!: Container;
-    private game!: Application;
-    private miner!: Miner;
+  private list: Sooch[] = [];
+  private options!: SoochOptions;
 
-    /**
-     *
-     * @param {Container} container main container for the sooch
-     * @param {Application} game main game class
-     * @param {Miner} miner Miner class needed to trigger down and up functions
-     */
-    constructor(container: Container, game: Application, miner: Miner) {
-      this.container = container;
-      this.game = game;
-      this.miner = miner;
+  /**
+   * Sooch list constructor
+   *
+   * @param {SoochOptions} options options
+   */
+  constructor(options: SoochOptions) {
+    this.options = options;
+  }
+
+  /**
+   * Spawns new sooch
+   */
+  public async add(): Promise<void> {
+    this.list.forEach((sooch) => {
+      sooch.goDown();
+    });
+    const sooch = new Sooch(this, this.options);
+    sooch.addChild();
+    sooch.enter();
+    this.list.push(sooch);
+    if (this.list.length > this.MAX_SOOCH_AMOUNT) {
+      this.list[0].removeChild();
+      this.list.shift();
     }
-
-    /**
-     * Spawns new sooch
-     */
-    public add(): void {
-      this.list.forEach((sooch) => {
-        sooch.goDown();
-      });
-      const sooch = new Sooch(this, this.container, this.game, this.miner);
-      sooch.addChild();
-      this.list.push(sooch);
-      if (this.list.length > this.MAX_SOOCH_AMOUNT) {
-        this.list[0].removeChild();
-        this.list.shift();
-      }
-    }
-};
+  }
+}
