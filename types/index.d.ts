@@ -1,9 +1,4 @@
-import {
-  Application,
-  Container,
-  Resource,
-  Texture,
-} from "pixi.js";
+import { Application, Container, Resource, Texture } from "pixi.js";
 import Miner from "../src/Piston";
 
 declare interface MainOptions {
