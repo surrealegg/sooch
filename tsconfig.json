@@ -8,7 +8,7 @@
     "jsx": "preserve",
     "noEmit": true,
     "skipLibCheck": true,
-    "typeRoots": ["node_modules/@types", "types"]
+    "typeRoots": ["node_modules/@types", "src/types"]
   },
-  "include": ["src", "types"]
+  "include": ["src", "src/types"]
 }

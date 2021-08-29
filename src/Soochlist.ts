@@ -1,5 +1,4 @@
 import Sooch from "./Sooch";
-import { SoochOptions } from "../types";
 
 /**
  * A class that stores list of Sooch
@@ -34,5 +33,13 @@ export default class SoochList {
       this.list[0].removeChild();
       this.list.shift();
     }
+  }
+
+  public down(): void {
+    if (this.list.length > 0) this.list[this.list.length - 1].onMouseDown();
+  }
+
+  public up(): void {
+    if (this.list.length > 0) this.list[this.list.length - 1].onMouseUp();
   }
 }

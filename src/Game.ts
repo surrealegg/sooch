@@ -1,40 +1,90 @@
-import { Application, Container, Loader, Resource, Texture } from "pixi.js";
+import { Application, Container, TilingSprite } from "pixi.js";
+import { AchievementCompare, Achievements } from "./Achievements";
+import { ParticleList } from "./ParticleList";
 import Piston from "./Piston";
+import { SaveState } from "./SaveState";
 import SoochList from "./Soochlist";
 
-const loader = new Loader();
-const sprites: {
-  sooch?: Texture<Resource>;
-  piston?: Texture<Resource>;
-} = {};
-loader.add("sooch", "/assets/sprites/sooch.png");
-loader.add("piston", "/assets/sprites/piston.png");
-loader.load((_loader, resources) => {
-  sprites.sooch = resources.sooch.texture;
-  sprites.piston = resources.piston.texture;
+export class Game {
+  private saveState: SaveState = new SaveState();
+  private achievements: Achievements = new Achievements();
+  private piston!: Piston;
+  private soochList!: SoochList;
+  private game!: Application;
+  private container: Container = new Container();
+  private particleList!: ParticleList;
+  private background: TilingSprite | null = null;
 
-  const canvas = document.getElementById("game");
-  const game = new Application({
-    view: canvas as HTMLCanvasElement,
-    width: 1400,
-    height: 750,
-    backgroundColor: 0x212121,
-  });
+  constructor(sprites: SpriteResources) {
+    const canvas = document.getElementById("game");
+    if (!canvas) {
+      console.error("#game is missing");
+      return;
+    }
 
-  const container = new Container();
-  container.sortableChildren = true;
-  const miner = new Piston({
-    container: container,
-    game: game,
-    texture: resources.piston.texture as Texture<Resource>,
-  });
-  const soochList = new SoochList({
-    container: container,
-    game: game,
-    texture: resources.sooch.texture as Texture<Resource>,
-    miner: miner,
-  });
-  soochList.add();
-  miner.addChild();
-  game.stage.addChild(container);
-});
+    this.particleList = new ParticleList(sprites);
+    this.game = new Application({
+      view: canvas as HTMLCanvasElement,
+      width: 700,
+      height: 750,
+    });
+
+    this.container.sortableChildren = true;
+
+    this.piston = new Piston({
+      container: this.container,
+      game: this.game,
+      texture: sprites,
+    });
+
+    if (sprites.tile) {
+      this.background = new TilingSprite(sprites.tile, 700, 750);
+      this.background.tileScale.x = 1;
+      this.background.tileScale.y = 1;
+      this.background.position.x = 0;
+      this.background.position.y = 0;
+    }
+
+    this.soochList = new SoochList({
+      container: this.container,
+      game: this.game,
+      texture: sprites,
+      piston: this.piston,
+      particle: this.particleList,
+      saveState: this.saveState,
+      background: this.background,
+    });
+
+    this.container.interactive = true;
+    this.container.on("mousedown", () => this.soochList.down());
+    this.container.on("mouseup", () => this.soochList.up());
+    this.container.on("mouseupoutside", () => this.soochList.up());
+
+    console.log(this.background);
+    if (this.background) this.game.stage.addChild(this.background);
+    this.soochList.add();
+    this.piston.addChild();
+    this.game.stage.addChild(this.container);
+
+    // Add achievements
+    // TO-DO: Complete the list.
+    this.achievements.add("The beginning...", {
+      description: "Get your first Sooch.",
+      data: {
+        clicks: { value: 1, check: AchievementCompare.GREAT_EQUAL },
+      },
+    });
+    this.achievements.add("Stacking up!", {
+      description: "Stack your first Sooch.",
+      data: {
+        count: { value: 1, check: AchievementCompare.GREAT_EQUAL },
+      },
+    });
+    this.achievements.add("New Sooch!", {
+      description: "Unlock a new type of Sooch.",
+      data: {
+        upgrades: [0],
+      },
+    });
+  }
+}

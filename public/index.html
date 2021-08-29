@@ -4,10 +4,119 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/assets/css/main.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/icons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/icons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/assets/icons/site.webmanifest" />
+    <link
+      rel="mask-icon"
+      href="/assets/icons/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+    <link rel="shortcut icon" href="/assets/icons/favicon.ico" />
+    <meta name="apple-mobile-web-app-title" content="Sooch Master" />
+    <meta name="application-name" content="Sooch Master" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta
+      name="msapplication-TileImage"
+      content="/assets/icons/mstile-144x144.png"
+    />
+    <meta
+      name="msapplication-config"
+      content="/assets/icons/browserconfig.xml"
+    />
     <title>Sooch</title>
   </head>
   <body>
-    <canvas id="game"></canvas>
-    <script type="module" src="/Game.js"></script>
+    <div class="container">
+      <div class="game-container">
+        <div class="canvas-container">
+          <div class="score">
+            <p id="score">0</p>
+            <p id="sps">0 per second</p>
+          </div>
+          <canvas id="game"></canvas>
+        </div>
+        <div class="options-container">
+          <div id="tabs">
+            <button data-click="tab-shop" class="tab">Shop</button>
+            <button data-click="tab-upgrades" class="tab">Upgrades</button>
+            <button data-click="tab-options" class="tab">Options</button>
+          </div>
+          <div class="page" id="tab-shop">
+            <p>Shop Placeholder</p>
+          </div>
+          <div style="display: none" class="page" id="tab-upgrades">
+            <p>Upgrades Placeholder</p>
+            <button class="buyBtn" id="buyBronze">
+              <span class="buyTitle">Bronze Sooch</span>
+              <span class="buyCost">1000 sooch</span>
+            </button>
+            <button class="buyBtn" id="buySilver">
+              <span class="buyTitle">Silver Sooch</span>
+              <span class="buyCost">5000 sooch</span>
+            </button>
+            <button class="buyBtn" id="buyGold">
+              <span class="buyTitle">Gold Sooch</span>
+              <span class="buyCost">50000 sooch</span>
+            </button>
+          </div>
+          <ul
+            style="display: none"
+            class="page"
+            id="tab-options"
+            class="options"
+          >
+            <li>
+              <button id="action-save">Save</button>
+              <button id="action-save-as-file">Save as File</button>
+              <p class="option-description">
+                Save manually (the game saves your progress automatically every
+                30 seconds.)
+              </p>
+            </li>
+            <li>
+              <button id="action-load">Import</button>
+              <button id="action-load-from-file">Import as File</button>
+              <p class="option-description">
+                Use this to use your load your saved progress.
+              </p>
+            </li>
+            <li>
+              <button id="action-reset" class="button-danger">Reset</button>
+              <p class="option-description">
+                Clear all your progress, including your achievements.
+              </p>
+            </li>
+            <li>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                id="volume-slider"
+              />
+              <p class="option-description">Volume</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <input title="load save" id="hidden-file-upload" type="file" />
+    <script type="module" src="/Main.js"></script>
   </body>
 </html>

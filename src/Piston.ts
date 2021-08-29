@@ -1,7 +1,6 @@
 import { Sprite } from "@pixi/sprite";
 import { Container } from "pixi.js";
 import { Sound } from "@pixi/sound";
-import { MainOptions } from "../types";
 import { Tween, TweenManager } from "./Tween/Tween";
 import { easeInExpo, easeOutExpo } from "./Tween/Easing";
 
@@ -24,7 +23,7 @@ export default class Piston {
    */
   constructor(options: MainOptions) {
     this.shakeTimeout = 0;
-    this.sprite = new Sprite(options.texture);
+    this.sprite = new Sprite(options.texture.piston);
     this.sprite.anchor.x = 0.5;
     this.sprite.anchor.y = 0;
     this.sprite.x = options.game.screen.width / 2;
@@ -53,6 +52,18 @@ export default class Piston {
         volume: 0.5,
       }),
     ];
+
+    const sliderVolume = document.getElementById(
+      "volume-slider"
+    ) as HTMLInputElement;
+    sliderVolume.addEventListener("input", () =>
+      this.changeVolume(sliderVolume.value)
+    );
+    const savedValue = localStorage.getItem("volume");
+    if (savedValue) {
+      sliderVolume.value = savedValue;
+      this.changeVolume(savedValue);
+    }
 
     // Set Animations
     this.tweenManager = new TweenManager();
@@ -95,6 +106,11 @@ export default class Piston {
 
     // Set container reference
     this.container = options.container;
+  }
+
+  private changeVolume(volume: string): void {
+    localStorage.setItem("volume", volume);
+    this.sounds.forEach((sound) => (sound.volume = parseInt(volume) / 100));
   }
 
   /**

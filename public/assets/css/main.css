@@ -1,4 +1,200 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #212121;
+}
+
+button,
+body {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.container {
+  display: flex;
+}
+
+.game-container {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.options-container {
+  width: 700px;
+  max-width: 700px;
+}
+
+#game {
+  user-select: none;
+}
+
+.options {
+  align-self: stretch;
+}
+
+.page {
+  color: #fff;
+  padding: 1em;
+}
+
+ul.page {
+  list-style-position: inside;
+}
+
+.page li {
+  list-style-type: none;
+  margin: 1em 0;
+}
+
+.page li:first-child {
+  margin-top: 0;
+}
+
+.page li:last-child {
+  margin-bottom: 0;
+}
+
+.options li {
+  margin: 1em 0;
+}
+
+button {
+  border: none;
+}
+
+.button-danger {
+  background-color: red;
+  color: #fff;
+}
+
+.option-description {
+  color: gray;
+  display: inline;
+}
+
+#hidden-file-upload {
+  display: none;
+}
+
+.buyBtn {
+  cursor: pointer;
+  width: 100%;
+  height: 78px;
+  padding: 10px 0;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.1s ease-out;
+}
+
+.buyBtn:before {
+  content: "";
+  background-image: url("../sprites/spritesheet.png");
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 68px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  transform: rotate(-15deg) scale(1.5);
+}
+
+.buyBtn.notAfford {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.buyTitle {
+  text-transform: uppercase;
+}
+
+.buyCost,
+.buyTitle {
+  display: block;
+}
+
+#buyBronze {
+  background-color: brown;
+}
+
+#buySilver {
+  background-color: silver;
+}
+
+#buySilver:before {
+  background-position: -956px -272px;
+}
+
+#buyGold {
+  color: #000;
+  background-color: gold;
+}
+
+#buyGold:before {
+  background-position: -499px -1px;
+}
+
+#buyLava {
+  background-color: #000;
+}
+
+#buyLava:before {
+  background-position: -854px -272px;
+}
+
+.purchased {
+  opacity: 1;
+}
+.purchased:after {
+  content: "[purchased]";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.8);
+  line-height: 78px;
+  font-size: 20px;
+}
+
+.score {
+  position: absolute;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  left: 0;
+  top: 25px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 15px 0;
+  line-height: 0;
+}
+
+.score #score {
+  font-size: 36px;
+}
+
+.canvas-container {
+  position: relative;
+}
+
+.tab {
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  background-color: #212121;
+  color: #fff;
+  font-size: larger;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.tab:hover,
+.tab.active {
+  background-color: grey;
 }

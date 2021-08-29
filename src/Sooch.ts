@@ -1,10 +1,8 @@
 import { Sprite } from "@pixi/sprite";
-import { Application, Container } from "pixi.js";
-import { SoochOptions } from "../types";
-import Miner from "./Piston";
 import SoochList from "./Soochlist";
 import { Tween, TweenManager } from "./Tween/Tween";
 import { easeInOutBack, easeOut, easeOutCubic } from "./Tween/Easing";
+import { SaveState } from "./SaveState";
 
 type Vector2 = {
   x: number;
@@ -18,14 +16,14 @@ export default class Sooch {
   readonly SOOCH_UPDATE_FACTOR = 5;
   readonly SOOCH_STARTING_POSITION = -500;
 
+  private saveState!: SaveState;
   private list!: SoochList;
   private health!: number;
   private sprite!: Sprite;
-  private container!: Container;
-  private game!: Application;
-  private miner!: Miner;
   private position!: Vector2;
   private tweenManager!: TweenManager;
+  private options!: SoochOptions;
+  private squash = false;
 
   /**
    * Constructor for Sooch class
@@ -42,9 +40,12 @@ export default class Sooch {
     };
 
     this.tweenManager = new TweenManager();
+    this.saveState = options.saveState;
+
+    this.options = options;
 
     // Create a sprite
-    this.sprite = new Sprite(options.texture);
+    this.sprite = new Sprite(options.texture.sooch?.default);
     this.sprite.interactive = true;
 
     // Handle events
@@ -54,14 +55,7 @@ export default class Sooch {
     this.sprite.on("mouseout", () => {
       options.game.view.style.cursor = "inherit";
     });
-    this.sprite.on("mousedown", () => {
-      this.onMouseDown();
-    });
-    this.sprite.on("mouseup", () => {
-      this.onMouseUp();
-    });
     this.sprite.on("mouseupoutside", () => {
-      this.onMouseUp();
       options.game.view.style.cursor = "inherit";
     });
 
@@ -73,9 +67,6 @@ export default class Sooch {
     this.sprite.zIndex = 0;
 
     // Set references to parent classes
-    this.container = options.container;
-    this.miner = options.miner;
-    this.game = options.game;
     this.list = list;
 
     this.tweenManager.add(
@@ -96,8 +87,8 @@ export default class Sooch {
       "enter",
       new Tween({
         from: { x: this.SOOCH_STARTING_POSITION },
-        to: { x: this.game.screen.width / 2 },
-        duration: 200,
+        to: { x: this.options.game.screen.width / 2 },
+        duration: 150,
         ease: easeOutCubic,
         onUpdate: (data) => (this.sprite.x = data.x),
       })
@@ -111,12 +102,19 @@ export default class Sooch {
         ease: easeOut,
         duration: 300,
         relative: true,
-        onUpdate: (_data, progress) => (this.sprite.y += progress * 6),
+        onUpdate: (_data, progress) => {
+          this.sprite.y += progress * 6;
+          if (this.options.background) {
+            this.options.background.tilePosition.y += progress / 2;
+            if (this.options.background.tilePosition.y >= 641)
+              this.options.background.tilePosition.y = 0;
+          }
+        },
       })
     );
 
-    this.game.ticker.add(() => {
-      this.tweenManager.update(this.game.ticker.lastTime);
+    this.options.game.ticker.add(() => {
+      this.tweenManager.update(this.options.game.ticker.lastTime);
     });
   }
 
@@ -131,14 +129,14 @@ export default class Sooch {
    * Adds the sprite to the screen
    */
   public addChild(): void {
-    this.container.addChild(this.sprite);
+    this.options.container.addChild(this.sprite);
   }
 
   /**
    * Removes the sprite to the screen
    */
   public removeChild(): void {
-    this.container.removeChild(this.sprite);
+    this.options.container.removeChild(this.sprite);
   }
 
   /**
@@ -155,24 +153,28 @@ export default class Sooch {
   /**
    * Main function that draw the Sooch itself
    */
-  private onMouseDown(): void {
+  public onMouseDown(): void {
     if (this.tweenManager.isPlaying("enter") || this.health < 1) return;
+    this.options.particle.add();
     this.health--;
     if (this.health > 0) {
       this.position.y += 5;
       this.sprite.y = this.position.y;
     }
-    this.miner.down();
+    this.squash = true;
+    this.options.piston.down();
     this.tweenManager.start("squash");
+    this.saveState.addClick(1);
   }
 
   /**
    * Main function that draw the Sooch itself
    */
-  private onMouseUp(): void {
-    if (this.tweenManager.isPlaying("enter")) return;
-    this.miner.up();
+  public onMouseUp(): void {
+    if (this.tweenManager.isPlaying("enter") || this.squash === false) return;
+    this.options.piston.up();
     this.tweenManager.start("squash", true);
+    this.squash = false;
     if (this.health <= 0) {
       this.sprite.interactive = false;
       this.sprite.scale.x = 1;
