@@ -199,8 +199,7 @@ button {
   background-color: grey;
 }
 
-@media (max-width: 750px)
-{
+@media (max-width: 750px) {
   .game-container {
     flex-direction: column;
   }
