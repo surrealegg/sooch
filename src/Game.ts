@@ -56,9 +56,9 @@ export class Game {
     });
 
     this.container.interactive = true;
-    this.container.on("mousedown", () => this.soochList.down());
-    this.container.on("mouseup", () => this.soochList.up());
-    this.container.on("mouseupoutside", () => this.soochList.up());
+    this.container.on("pointerdown", () => this.soochList.down());
+    this.container.on("pointerup", () => this.soochList.up());
+    this.container.on("pointerupoutside", () => this.soochList.up());
 
     console.log(this.background);
     if (this.background) this.game.stage.addChild(this.background);

@@ -198,3 +198,10 @@ button {
 .tab.active {
   background-color: grey;
 }
+
+@media (max-width: 750px)
+{
+  .game-container {
+    flex-direction: column;
+  }
+}
