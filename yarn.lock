@@ -353,10 +353,10 @@
   dependencies:
     ismobilejs "^1.1.0"
 
-"@pixi/sound@^4.0.4":
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/@pixi/sound/-/sound-4.0.4.tgz#a6bdf68ef587c1f733e126956a02404051344c8a"
-  integrity sha512-nJxJNBF6oJjOjudcxeibdgHDW/9MVAGYZFtJHzG+Yc/lwX5SeQFH+aIhJoDTOjJAolE8VYOnY4OMP9n/U6998g==
+"@pixi/sound@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@pixi/sound/-/sound-4.1.0.tgz#d174fa7c9d538d3461d2b69600309927c4194b22"
+  integrity sha512-aL91XtuvpHobImxW359pPdEkLqqc90AiosMLQaQ07gTIEkXVzNnkEXBwmpdwnMApm2H03txJqg//vj8f2zlZuA==
 
 "@pixi/sprite-animated@6.1.2":
   version "6.1.2"
